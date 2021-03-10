@@ -61,3 +61,15 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+def addListing(request):
+    pass
+
+def createBid(request):
+    pass
+
+def addComment(request):
+    pass
+
+def createWatchlist(request):
+    pass
