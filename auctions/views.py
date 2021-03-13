@@ -68,6 +68,12 @@ def register(request):
 def addListing(request):
     pass
 
+def listingPage(request, id):
+    entry = AuctionListing.objects.get(id=id)
+    
+    context = {'entry': entry}
+    return render(request, "auctions/listing_page.html", context)
+
 def createBid(request):
     pass
 
