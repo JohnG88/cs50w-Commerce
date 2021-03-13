@@ -73,3 +73,31 @@ def addComment(request):
 
 def createWatchlist(request):
     pass
+
+
+
+# from auctions.models import User, AuctionListing, Bid, Comment, Watchlist
+
+
+# This line gives me all fields from User id=1(which in this case is the superuser)
+# user1 = User.objects.get(id=1) 
+
+# First use an object and assign it to model:
+    # user_bid = Bid()
+# Then add each field independently:
+    # user_bid.user=user1.username(probably)
+    # Then user_bid.save()
+
+# Then to add the many to many field:
+    # user_bid.bid.add(AuctionListing.objects.get(id=1)) (this line saves the instance)
+
+# Then to add the other field:
+    # user_bid.new_bid=1001
+    # Then: user_bid.save()
+
+
+# user_bid.bid.all() gives queryset [AuctionListing: Car]
+
+# user_bid = Bid.objects.get(id=1)
+#user_bid.bid.values('title')
+    # QuerySet [{'title': 'Car'}]
