@@ -70,8 +70,9 @@ def addListing(request):
 
 def listingPage(request, id):
     entry = AuctionListing.objects.get(id=id)
+    comment = Comment.objects.all()
     
-    context = {'entry': entry}
+    context = {'entry': entry, 'comment': comment}
     return render(request, "auctions/listing_page.html", context)
 
 def createBid(request):
@@ -81,7 +82,10 @@ def addComment(request):
     pass
 
 def createWatchlist(request):
-    pass
+    entry_watch = Watchlist.objects.all()
+    
+    context = {'entry_watch': entry_watch}
+    return render(request, "auctions/watchlist_page.html", context)
 
 
 

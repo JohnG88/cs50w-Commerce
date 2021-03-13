@@ -5,4 +5,12 @@
     <p>{{ entry.description }}</p>
     <p>{{ entry.price }}</p>
     <p>{{ entry.date_posted }}</p>
+
+    <div class="container">
+        {% for comments in comment %}
+            <p>{{ comments.user }}</p>
+            <p>{{ comments.comment }}</p>
+            <p>{{ comments.date_posted }}</p>
+        {% endfor %}
+    </div>
 {% endblock %}

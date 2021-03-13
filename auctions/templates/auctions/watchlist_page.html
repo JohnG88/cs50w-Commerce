@@ -1,0 +1,9 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% for watch in entry_watch %}
+        <p>{{ watch.user }}</p>
+        <p>{{ watch.auction }}</p>
+        <p>{{ watch.date_posted }}</p>
+    {% endfor %}
+{% endblock %}
