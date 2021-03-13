@@ -8,5 +8,6 @@
         <p>{{ entries.description }}</p>
         <p>{{ entries.price }}</p>
         <p>{{ entries.date_posted }}</p>
+        <a href="{% url 'listingPage' entries.id %}">View Item</a>
     {% endfor %}
 {% endblock %}
