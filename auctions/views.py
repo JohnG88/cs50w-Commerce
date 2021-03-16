@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import *
+from .forms import *
 
 
 def index(request):
@@ -65,21 +66,39 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
-def addListing(request):
-    pass
+def createListing(request):
+    form = AuctionListForm()
+    if request.method == 'POST':
+        form = AuctionListForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    context = {'form': form}
+    return render(request, "auctions/create_listingpage.html", context)
 
 def listingPage(request, id):
     entry = AuctionListing.objects.get(id=id)
-    comment = Comment.objects.all()
+    comment_form = CommentForm()
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment_item = comment_form.save(commit=False)
+            
+            comment_item.user = request.user
+            comment_item.entry = entry
+            comment_item.save()
+            return HttpResponseRedirect(reverse('listingPage', args=[id]))
     
-    context = {'entry': entry, 'comment': comment}
+    context = {'entry': entry, 'comment_form': comment_form}
     return render(request, "auctions/listing_page.html", context)
 
 def createBid(request):
     pass
 
 def addComment(request):
+    #add_comment = AuctionListing.addcomment_set.all()
     pass
+
 
 def createWatchlist(request):
     entry_watch = Watchlist.objects.all()

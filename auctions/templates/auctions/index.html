@@ -7,6 +7,7 @@
         <p>{{ entries.title }}</p>
         <p>{{ entries.description }}</p>
         <p>{{ entries.price }}</p>
+        <p><img src="{{ entries.photo }}" width="30%"></p>
         <p>{{ entries.date_posted }}</p>
         <a href="{% url 'listingPage' entries.id %}">View Item</a>
     {% endfor %}
