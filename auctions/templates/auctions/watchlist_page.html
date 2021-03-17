@@ -1,9 +1,12 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    {% for watch in entry_watch %}
-        <p>{{ watch.user }}</p>
-        <p>{{ watch.auction }}</p>
-        <p>{{ watch.date_posted }}</p>
+    {% for watch in product_list %}
+        <p>{{ watch.title }}</p>
+        <p>{{ watch.description }}</p>
+        <p>{{ watch.price }}</p>
+        <img src="{{ watch.photo }}" width="30%">
+        <p>{{ watch.category }}</p>
+        <p>{{ watch.date_added }}</p>
     {% endfor %}
 {% endblock %}

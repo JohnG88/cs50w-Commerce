@@ -95,15 +95,41 @@ def listingPage(request, id):
 def createBid(request):
     pass
 
-def addComment(request):
-    #add_comment = AuctionListing.addcomment_set.all()
-    pass
+def add_Watchlist(request, id):
+    entry = AuctionListing.objects.get(id=id)
+    auction_exists = Watchlist.objects.filter(user=request.user, auction=id)
 
+    if auction_exists:
+        auction_exists.delete()
+
+        item = AuctionListing.objects.get(id=id)
+        added = Watchlist.objects.filter(user=request.user, auction=id)
+
+        context = {'item': item, 'added': added}
+        return HttpResponseRedirect(reverse(createWatchlist), context)
+
+    else:
+        auction_exists = Watchlist()
+        auction_exists.user = request.user
+        auction_exists.auction = entry
+        auction_exists.save()
+
+        item = AuctionListing.objects.get(id=id)
+        added = Watchlist.objects.filter(user=request.user, auction=id)
+
+    context = {'item': item, 'added': added}
+    return HttpResponseRedirect(reverse(createWatchlist), context)
 
 def createWatchlist(request):
-    entry_watch = Watchlist.objects.all()
+    entry_watch = Watchlist.objects.filter(user=request.user)
+
+    product_list = []
+    if entry_watch:
+        for item in entry_watch:
+            product = AuctionListing.objects.get(id=item.auction.id)
+            product_list.append(product)
     
-    context = {'entry_watch': entry_watch}
+    context = {'product_list': product_list}
     return render(request, "auctions/watchlist_page.html", context)
 
 

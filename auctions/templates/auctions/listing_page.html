@@ -5,7 +5,11 @@
     <p>{{ entry.description }}</p>
     <p>{{ entry.price }}</p>
     <p>{{ entry.date_posted }}</p>
-    <a href="{% url 'createWatchlist' %}">Add to Watchlist</a>
+    {% if added %}
+    <a href="{% url 'add_Watchlist' entry.id %}">Remove from Watchlist</a>
+    {% else %}
+    <a href="{% url 'add_Watchlist' entry.id %}">Add to Watchlist</a>
+    {% endif %}
 
     <div class="container">
     <h2>Comments...</h2>
