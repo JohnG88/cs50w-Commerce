@@ -5,8 +5,9 @@
         <p>{{ watch.title }}</p>
         <p>{{ watch.description }}</p>
         <p>{{ watch.price }}</p>
-        <img src="{{ watch.photo }}" width="30%">
+        <p><img src="{{ watch.photo }}" width="30%"></p>
         <p>{{ watch.category }}</p>
-        <p>{{ watch.date_added }}</p>
+        <p>{{ watch.date_posted }}</p>
+        <a href="{% url 'delete_Watchlist' watch.id %}">Remove from Watchlist</a>
     {% endfor %}
 {% endblock %}

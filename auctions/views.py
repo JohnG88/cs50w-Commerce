@@ -99,26 +99,37 @@ def add_Watchlist(request, id):
     entry = AuctionListing.objects.get(id=id)
     auction_exists = Watchlist.objects.filter(user=request.user, auction=id)
 
+    
     if auction_exists:
         auction_exists.delete()
+    """
 
         item = AuctionListing.objects.get(id=id)
         added = Watchlist.objects.filter(user=request.user, auction=id)
 
         context = {'item': item, 'added': added}
         return HttpResponseRedirect(reverse(createWatchlist), context)
-
+    
     else:
-        auction_exists = Watchlist()
-        auction_exists.user = request.user
-        auction_exists.auction = entry
-        auction_exists.save()
+    """
+    auction_exists = Watchlist()
+    auction_exists.user = request.user
+    auction_exists.auction = entry
+    auction_exists.save()
 
-        item = AuctionListing.objects.get(id=id)
-        added = Watchlist.objects.filter(user=request.user, auction=id)
+    item = AuctionListing.objects.get(id=id)
+    added = Watchlist.objects.filter(user=request.user, auction=id)
 
-    context = {'item': item, 'added': added}
+    context = {'item': item}
     return HttpResponseRedirect(reverse(createWatchlist), context)
+
+def delete_Watchlist(request, id):
+    entry = Watchlist.objects.filter(user=request.user, auction=id)
+    entry.delete()
+
+    context = {'entry': entry}
+    return HttpResponseRedirect(reverse(createWatchlist), context)
+    
 
 def createWatchlist(request):
     entry_watch = Watchlist.objects.filter(user=request.user)
