@@ -10,6 +10,7 @@ from .forms import *
 
 def index(request):
     entry = AuctionListing.objects.all()
+    
 
     context = {'entry': entry}
     return render(request, "auctions/index.html", context)
@@ -129,8 +130,17 @@ def listingPage(request, id):
     context = {'entry': entry, 'comment_form': comment_form, 'form_post': form_post}
     return render(request, "auctions/listing_page.html", context)
 
-def createBid(request):
-    pass
+def category(request, category):
+    category_products = AuctionListing.objects.filter(category=category)
+    
+    context = {'category_products': category_products, 'category': category}
+    return render(request, "auctions/category.html", context)
+
+def categoryPage(request):
+
+    context = {}
+    return render(request, "auctions/category_page.html", context)
+
 
 def add_Watchlist(request, id):
     entry = AuctionListing.objects.get(id=id)
