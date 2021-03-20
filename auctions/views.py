@@ -87,9 +87,46 @@ def listingPage(request, id):
             comment_item.user = request.user
             comment_item.entry = entry
             comment_item.save()
+
             return HttpResponseRedirect(reverse('listingPage', args=[id]))
     
-    context = {'entry': entry, 'comment_form': comment_form}
+    form_post = BidForm()
+    if request.method == 'POST':
+        form_post = BidForm(request.POST)
+        if form_post.is_valid():
+            form_item = form_post.save(commit=False)
+            form_item.user = request.user
+            form_item.bid = entry
+            if entry.price >= form_item.new_bid:
+                return HttpResponseRedirect(reverse('listingPage', args=[id]))
+            else:
+                form_item.save()
+                entry.price = form_item.new_bid
+                entry.save()
+
+                return HttpResponseRedirect(reverse('listingPage', args=[id]))
+    """
+            entry_bid = Bid.objects.filter(id=id)
+            if entry.price >= form_item.new_bid:
+                    entry_bid.delete()
+            
+            else:
+                entry.price = form_item.new_bid
+                entry.save()
+                
+            return HttpResponseRedirect(reverse('listingPage', args=[id]))
+    """
+    """
+    form_post = AuctionPriceUpdateForm()
+    if request.method == 'POST':
+        form_post = AuctionPriceUpdateForm(request.POST, instance=entry)
+        if form_post.is_valid():
+            form_post.save()
+            print(form_post)
+            return HttpResponseRedirect(reverse('listingPage', args=[id]))
+    """
+    
+    context = {'entry': entry, 'comment_form': comment_form, 'form_post': form_post}
     return render(request, "auctions/listing_page.html", context)
 
 def createBid(request):
@@ -120,7 +157,7 @@ def add_Watchlist(request, id):
     item = AuctionListing.objects.get(id=id)
     added = Watchlist.objects.filter(user=request.user, auction=id)
 
-    context = {'item': item}
+    context = {'item': item, 'added': added}
     return HttpResponseRedirect(reverse(createWatchlist), context)
 
 def delete_Watchlist(request, id):

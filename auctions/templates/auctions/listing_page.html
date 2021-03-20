@@ -3,10 +3,20 @@
 {% block body %}
     <p>{{ entry.title }}</p>
     <p>{{ entry.description }}</p>
-    <p>{{ entry.price }}</p>
+    <p>Current Bid: {{ entry.price }}</p>
     <p><img src="{{ entry.photo }}" width="30%"></p>
     <p>{{ entry.category }}</p>
     <p>{{ entry.date_posted }}</p>
+    <form action="{% url 'listingPage' entry.id %}" method="post">
+    {% csrf_token %}
+    {% for fp in form_post %}
+        <p>{{ fp.label }}</p>
+        <p>{{ fp }}</p>
+    {% endfor %}
+    
+    <input type="submit" value="Place Bid">
+    </form>
+    <div>{{ message }}</div>
     <a href="{% url 'add_Watchlist' entry.id %}">Add to Watchlist</a>
     <!--{% if added %}
     <a href="{% url 'add_Watchlist' entry.id %}">Remove from Watchlist</a>

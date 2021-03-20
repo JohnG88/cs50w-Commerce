@@ -33,7 +33,7 @@ class AuctionListing(models.Model):
 
 class Bid(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    bid = models.ManyToManyField(AuctionListing)
+    bid = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, null=True)
     new_bid = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     new_bid_date = models.DateTimeField(auto_now=True, blank=True, null=True)
     

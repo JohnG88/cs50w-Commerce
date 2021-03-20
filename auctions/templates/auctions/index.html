@@ -6,7 +6,7 @@
     {% for entries in entry %}
         <p>{{ entries.title }}</p>
         <p>{{ entries.description }}</p>
-        <p>{{ entries.price }}</p>
+        <p>Current Bid: {{ entries.price }}</p>
         <p><img src="{{ entries.photo }}" width="30%"></p>
         <p>{{ entries.category }}</p>
         <p>{{ entries.date_posted }}</p>
