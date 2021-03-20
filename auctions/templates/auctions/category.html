@@ -6,7 +6,7 @@
     <p>{{ products.title }}</p>
     <p>{{ products.description }}</p>
     <p>Current Bid: ${{ products.price }}</p>
-    <p><img src="{{ products.photo }}" width="30%"></p>
+    <p><a href="{% url 'listingPage' products.id %}"><img src="{{ products.photo }}" width="30%"></a></p>
     <p>{{ products.category }}</p>
     {% endfor %}
 {% endblock  %}

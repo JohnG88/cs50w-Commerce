@@ -4,6 +4,7 @@
     <h2>Active Listings</h2>
 
     {% for entries in entry %}
+        <p>{{ entries.user }}</p>
         <p>{{ entries.title }}</p>
         <p>{{ entries.description }}</p>
         <p>Current Bid: {{ entries.price }}</p>

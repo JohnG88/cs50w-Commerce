@@ -5,7 +5,7 @@
         <p>{{ watch.title }}</p>
         <p>{{ watch.description }}</p>
         <p>{{ watch.price }}</p>
-        <p><img src="{{ watch.photo }}" width="30%"></p>
+        <p><a href="{% url 'listingPage' watch.id %}"><img src="{{ watch.photo }}" width="30%"></a></p>
         <p>{{ watch.category }}</p>
         <p>{{ watch.date_posted }}</p>
         <a href="{% url 'delete_Watchlist' watch.id %}">Remove from Watchlist</a>

@@ -4,7 +4,7 @@ from .models import *
 class AuctionListForm(ModelForm):
     class Meta:
         model = AuctionListing
-        fields = '__all__'
+        exclude = ['user']
 
 class CommentForm(ModelForm):
     class Meta:
