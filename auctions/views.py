@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib import messages
 
 from .models import *
 from .forms import *
@@ -101,6 +102,7 @@ def listingPage(request, id):
             form_item.user = request.user
             form_item.bid = entry
             if entry.price >= form_item.new_bid:
+                messages.info(request, 'Bid must be higher than current bid.')
                 return HttpResponseRedirect(reverse('listingPage', args=[id]))
             else:
                 form_item.save()
@@ -128,8 +130,9 @@ def listingPage(request, id):
             print(form_post)
             return HttpResponseRedirect(reverse('listingPage', args=[id]))
     """
-    
-    context = {'entry': entry, 'comment_form': comment_form, 'form_post': form_post}
+    bid_winner = Bid.objects.filter(bid=entry.id).last()
+    print(bid_winner)
+    context = {'entry': entry, 'comment_form': comment_form, 'form_post': form_post, 'bid_winner': bid_winner}
     return render(request, "auctions/listing_page.html", context)
 
 def category(request, category):

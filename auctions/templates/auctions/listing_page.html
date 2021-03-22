@@ -1,6 +1,9 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+<div>
+    <h1>Congratulations, {{  bid_winner.user }} has won the auction!</h1>
+</div>
     <p>{{ entry.title }}</p>
     <p>{{ entry.description }}</p>
     <p>Current Bid: {{ entry.price }}</p>
@@ -16,7 +19,9 @@
     
     <input type="submit" value="Place Bid">
     </form>
-    <div>{{ message }}</div>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
     <a href="{% url 'add_Watchlist' entry.id %}">Add to Watchlist</a>
     <!--{% if added %}
     <a href="{% url 'add_Watchlist' entry.id %}">Remove from Watchlist</a>
@@ -25,23 +30,20 @@
     {% endif %} -->
 
     <div class="container">
-    <h2>Comments...</h2>
+    <h2>No Comments Yet...</h2>
         {% if not entry.comments.all %}
-            <p>No Comments Yet...</p>
             <form action="{% url 'listingPage' entry.id %}" method="post">
             {% csrf_token %}
                 {% for c in comment_form %}
-                <p>{{ c.label }}</p>
                 <p>{{ c }}</p>
             {% endfor %}
                 <input type="submit" value="Submit">
             </form>
         {% else %}
-        <p>No Comments Yet...</p>
             <form action="{% url 'listingPage' entry.id %}" method="post">
             {% csrf_token %}
             {% for c in comment_form %}
-                <p>{{ c.label }}</p>
+                <!--<p>{{ c.label }}</p>-->
                 <p>{{ c }}</p>
             {% endfor %}
                 <input type="submit" value="Submit">
