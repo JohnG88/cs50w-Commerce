@@ -1,0 +1,13 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% for listings in auctions %}
+        <p>{{ listings.title }}</p>
+        <p>{{ listings.active }}</p>
+        <a href="{% url 'updateFalse' listings.id %}">Update</a>
+    {% endfor %}
+    <!--<form action="{% url 'userListingpage' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Deactivate">
+    </form>-->
+{% endblock %}

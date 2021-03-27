@@ -9,6 +9,7 @@
         <p>{{ entries.description }}</p>
         <p>Current Bid: {{ entries.price }}</p>
         <p><img src="{{ entries.photo }}" width="30%"></p>
+        <p>{{ entries.active }}</p>
         <p>{{ entries.category }}</p>
         <p>{{ entries.date_posted }}</p>
         <a href="{% url 'listingPage' entries.id %}">View Item</a>

@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<p>{{ auctions.title }}</p>
+<p>{{ auctions.active }}</p>
+
+<form action="{% url 'updateFalse' auctions.id%}" method="post">
+    {% csrf_token %}
+    {% for p in form_post %}
+        <p>{{ p }}</p>
+    {% endfor %}
+    <input type="submit" value="De-list">
+</form>
+
+{% endblock %}

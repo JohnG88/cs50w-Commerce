@@ -14,4 +14,6 @@ urlpatterns = [
     path("add_Watchlist/<int:id>", views.add_Watchlist, name="add_Watchlist"),
     path("delete_Watchlist/<int:id>", views.delete_Watchlist, name="delete_Watchlist"),
     path("createWatchlist/", views.createWatchlist, name="createWatchlist"),
+    path("userListingpage/", views.userListingpage, name="userListingpage"),
+    path("updateFalse/<int:id>", views.updateFalse, name="updateFalse"),
 ]

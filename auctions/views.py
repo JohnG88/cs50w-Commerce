@@ -110,26 +110,7 @@ def listingPage(request, id):
                 entry.save()
 
                 return HttpResponseRedirect(reverse('listingPage', args=[id]))
-    """
-            entry_bid = Bid.objects.filter(id=id)
-            if entry.price >= form_item.new_bid:
-                    entry_bid.delete()
-            
-            else:
-                entry.price = form_item.new_bid
-                entry.save()
-                
-            return HttpResponseRedirect(reverse('listingPage', args=[id]))
-    """
-    """
-    form_post = AuctionPriceUpdateForm()
-    if request.method == 'POST':
-        form_post = AuctionPriceUpdateForm(request.POST, instance=entry)
-        if form_post.is_valid():
-            form_post.save()
-            print(form_post)
-            return HttpResponseRedirect(reverse('listingPage', args=[id]))
-    """
+    
     bid_winner = Bid.objects.filter(bid=entry.id).last()
     print(bid_winner)
     context = {'entry': entry, 'comment_form': comment_form, 'form_post': form_post, 'bid_winner': bid_winner}
@@ -154,16 +135,7 @@ def add_Watchlist(request, id):
     
     if auction_exists:
         auction_exists.delete()
-    """
 
-        item = AuctionListing.objects.get(id=id)
-        added = Watchlist.objects.filter(user=request.user, auction=id)
-
-        context = {'item': item, 'added': added}
-        return HttpResponseRedirect(reverse(createWatchlist), context)
-    
-    else:
-    """
     auction_exists = Watchlist()
     auction_exists.user = request.user
     auction_exists.auction = entry
@@ -196,10 +168,32 @@ def createWatchlist(request):
     return render(request, "auctions/watchlist_page.html", context)
 
 
+def userListingpage(request):
+    user = request.user
+    auctions = AuctionListing.objects.filter(user=user.id)
+    
+    context = {'auctions': auctions}
+    return render(request, "auctions/user_listingpage.html", context)
+
+
+def updateFalse(request, id):
+    auctions = AuctionListing.objects.get(id=id)
+    print(auctions)
+
+    form_post = AuctionActiveUpdateForm()
+    if request.method == 'POST':
+        form_post = AuctionActiveUpdateForm(request.POST, instance=auctions)
+        if form_post.is_valid():
+            form_item = form_post.save(commit=False)
+            form_item.active = False
+            form_item.save()
+
+    context = {'form_post': form_post, 'auctions': auctions}
+    #return HttpResponseRedirect(reverse('userListingpage'), context)
+    return render(request, "auctions/update_false.html", context)
+
 
 # from auctions.models import User, AuctionListing, Bid, Comment, Watchlist
-
-
 # This line gives me all fields from User id=1(which in this case is the superuser)
 # user1 = User.objects.get(id=1) 
 

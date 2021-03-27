@@ -9,6 +9,7 @@
     <p>Current Bid: {{ entry.price }}</p>
     <p><img src="{{ entry.photo }}" width="30%"></p>
     <p>{{ entry.category }}</p>
+    <p>{{ entry.active }}</p>
     <p>{{ entry.date_posted }}</p>
     <form action="{% url 'listingPage' entry.id %}" method="post">
     {% csrf_token %}

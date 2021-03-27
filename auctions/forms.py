@@ -6,6 +6,12 @@ class AuctionListForm(ModelForm):
         model = AuctionListing
         exclude = ['user']
 
+class AuctionActiveUpdateForm(ModelForm):
+    class Meta:
+        model = AuctionListing
+        exclude = ['user', 'title', 'description', 'price', 'photo', 'category',]
+
+
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
@@ -15,10 +21,3 @@ class BidForm(ModelForm):
     class Meta:
         model = Bid
         exclude =['user', 'bid']
-
-"""
-class AuctionPriceUpdateForm(ModelForm):
-    class Meta:
-        model = AuctionListing
-        exclude = ['title', 'description', 'photo', 'category']
-"""
