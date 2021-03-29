@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -8,6 +9,7 @@ from django.contrib import messages
 from .models import *
 from .forms import *
 
+# yourmom.com yourugly
 
 def index(request):
     entry = AuctionListing.objects.all()
@@ -68,6 +70,7 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+@login_required
 def createListing(request):
     form = AuctionListForm()
     if request.method == 'POST':
@@ -79,6 +82,17 @@ def createListing(request):
             return redirect('/')
     context = {'form': form}
     return render(request, "auctions/create_listingpage.html", context)
+
+"""
+def deleteListing(request, id):
+    item = AuctionListing.objects.get(id=id)
+    if request.method == "POST":
+        item.delete()
+        item.save()
+
+    context = {}
+    return HttpResponseRedirect(reverse('userListingpage'))
+"""
 
 def listingPage(request, id):
     entry = AuctionListing.objects.get(id=id)
@@ -167,7 +181,7 @@ def createWatchlist(request):
     context = {'product_list': product_list}
     return render(request, "auctions/watchlist_page.html", context)
 
-
+@login_required
 def userListingpage(request):
     user = request.user
     auctions = AuctionListing.objects.filter(user=user.id)
@@ -175,7 +189,7 @@ def userListingpage(request):
     context = {'auctions': auctions}
     return render(request, "auctions/user_listingpage.html", context)
 
-
+@login_required
 def updateFalse(request, id):
     auctions = AuctionListing.objects.get(id=id)
     print(auctions)
@@ -185,7 +199,6 @@ def updateFalse(request, id):
         form_post = AuctionActiveUpdateForm(request.POST, instance=auctions)
         if form_post.is_valid():
             form_item = form_post.save(commit=False)
-            form_item.active = False
             form_item.save()
 
     context = {'form_post': form_post, 'auctions': auctions}

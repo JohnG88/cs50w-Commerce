@@ -2,6 +2,10 @@
 
 {% block body %}
     {% for watch in product_list %}
+    {% if watch.active == False %}
+        <p>The auction for <a href="{% url 'listingPage' watch.id %}">{{ watch.title }}</a> has been closed.</p>
+        <a href="{% url 'delete_Watchlist' watch.id %}">Remove from Watchlist</a>
+    {% else %}
         <p>{{ watch.title }}</p>
         <p>{{ watch.description }}</p>
         <p>{{ watch.price }}</p>
@@ -9,5 +13,6 @@
         <p>{{ watch.category }}</p>
         <p>{{ watch.date_posted }}</p>
         <a href="{% url 'delete_Watchlist' watch.id %}">Remove from Watchlist</a>
+    {% endif %}
     {% endfor %}
 {% endblock %}

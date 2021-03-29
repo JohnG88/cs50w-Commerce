@@ -2,11 +2,15 @@
 
 {% block body %}
     <p class="black-text my-4 font-weight-bold">These are the Active Listings available in {{category}} category.</p>
-    {% for products in category_products %}           
-    <p>{{ products.title }}</p>
-    <p>{{ products.description }}</p>
-    <p>Current Bid: ${{ products.price }}</p>
-    <p><a href="{% url 'listingPage' products.id %}"><img src="{{ products.photo }}" width="30%"></a></p>
-    <p>{{ products.category }}</p>
+    {% for products in category_products %}
+    {% if products.active == False %}
+        <p>This auction  for <a href="{% url 'listingPage' products.id %}">{{ products.title }}</a> has been closed.</p>
+    {% else %}
+        <p>{{ products.title }}</p>
+        <p>{{ products.description }}</p>
+        <p>Current Bid: ${{ products.price }}</p>
+        <p><a href="{% url 'listingPage' products.id %}"><img src="{{ products.photo }}" width="30%"></a></p>
+        <p>{{ products.category }}</p>
+    {% endif %}
     {% endfor %}
 {% endblock  %}

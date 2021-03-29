@@ -1,9 +1,13 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div>
-    <h1>Congratulations, {{  bid_winner.user }} has won the auction!</h1>
-</div>
+{% if entry.active == False and bid_winner.user == request.user %}
+    <div>
+        <h1>Congratulations, {{ bid_winner.user }} you have won the auction!</h1>
+    </div>
+{% elif entry.active == False and bid_winner != request.user %}
+    <p>This auction for {{ entry.title }} has been closed.</p>
+{% else %}
     <p>{{ entry.title }}</p>
     <p>{{ entry.description }}</p>
     <p>Current Bid: {{ entry.price }}</p>
@@ -17,7 +21,7 @@
         <p>{{ fp.label }}</p>
         <p>{{ fp }}</p>
     {% endfor %}
-    
+
     <input type="submit" value="Place Bid">
     </form>
     {% for message in messages %}
@@ -56,4 +60,5 @@
         {% endfor %}
         {% endif %}
     </div>
+{% endif %}
 {% endblock %}

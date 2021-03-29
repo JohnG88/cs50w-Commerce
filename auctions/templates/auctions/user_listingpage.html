@@ -4,7 +4,7 @@
     {% for listings in auctions %}
         <p>{{ listings.title }}</p>
         <p>{{ listings.active }}</p>
-        <a href="{% url 'updateFalse' listings.id %}">Update</a>
+        <a href="{% url 'updateFalse' listings.id %}">Deactivate Listing</a>
     {% endfor %}
     <!--<form action="{% url 'userListingpage' %}" method="post">
     {% csrf_token %}

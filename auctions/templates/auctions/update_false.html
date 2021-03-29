@@ -1,14 +1,18 @@
 {% extends "auctions/layout.html" %}
 {% block body %}
-<p>{{ auctions.title }}</p>
-<p>{{ auctions.active }}</p>
+{% if auctions.active == False and auctions.user == request.user %}
+    <p>Item {{ auctions.title }} has been de-listed.</p>
+{% else %}
+    <p>{{ auctions.title }}</p>
+    <p>{{ auctions.active }}</p>
 
-<form action="{% url 'updateFalse' auctions.id%}" method="post">
-    {% csrf_token %}
-    {% for p in form_post %}
-        <p>{{ p }}</p>
-    {% endfor %}
-    <input type="submit" value="De-list">
-</form>
-
+    <p>To de-list the listing set to No.</p>
+    <form action="{% url 'updateFalse' auctions.id%}" method="post">
+        {% csrf_token %}
+        {% for p in form_post %}
+            <p>{{ p }}</p>
+        {% endfor %}
+        <input type="submit" value="De-list">
+    </form>
+{% endif %}
 {% endblock %}

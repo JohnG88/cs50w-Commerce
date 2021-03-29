@@ -25,7 +25,7 @@ class AuctionListing(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     photo = models.URLField(blank=True, null=True)
     category = models.CharField(max_length=200, blank=True, choices=CATEGORY)
-    active = models.BooleanField(null=True)
+    active = models.BooleanField(null=True, default=True)
     date_posted = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
@@ -40,7 +40,7 @@ class Bid(models.Model):
     
     # if coming from an id or pk make sure to wrap up in str() to convert into a string
     def __str__(self):
-        return str(self.user)
+        return f"{self.bid} | {self.new_bid}"
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -49,7 +49,7 @@ class Comment(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     
     def __str__(self):
-        return str(self.comment)
+        return f"{self.entry}"
 
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

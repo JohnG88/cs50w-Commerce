@@ -4,6 +4,9 @@
     <h2>Active Listings</h2>
 
     {% for entries in entry %}
+    {% if entries.active == False %}
+        <p>This listing for <a href="{% url 'listingPage' entries.id %}">{{ entries.title }}</a> has been closed. Check to see the winner.</p>
+    {% else %}
         <p>{{ entries.user }}</p>
         <p>{{ entries.title }}</p>
         <p>{{ entries.description }}</p>
@@ -13,5 +16,6 @@
         <p>{{ entries.category }}</p>
         <p>{{ entries.date_posted }}</p>
         <a href="{% url 'listingPage' entries.id %}">View Item</a>
+    {% endif %}
     {% endfor %}
 {% endblock %}
